@@ -1,0 +1,143 @@
+Single Row Functions
+--------------------
+--INSTR → finds the POSITION
+
+--SUBSTR → extracts the VALUE
+** Alias
+
+Select  
+'Hello! H@rri$.**' Str,
+Length('Hello! H@rri$.**') "Len gth"
+From    Dual;
+
+
+(1) - Substr --finds the value from a given position in a string.
+
+
+--** First 2 characters from string
+
+select 'Hel#lo! H@rri$.**' as Str,
+Length('Hel#lo! H@rri$.**') as  "Len gth",
+substr('Hel#lo! H@rri$.**',7,2) as "First 2 chars"
+From    Dual;
+
+--substr syntax SUBSTR(string, start_position, length)
+            -- e.g SUBSTR('Hel#lo! H@rri$.**',7,2). 
+            -- 7 is the starting position, 2 is the no of characters to return.
+
+** Last 2 Charaters from String
+select 'Hel#lo! H@rri$.**' as Str,
+Length('Hel#lo! H@rri$.**') as "Length",
+substr('Hel#lo! H@rri$.**',-2) as "Final 2 chars"
+from dual;
+
+
+** Characters from MId in a string
+select 'Hel#lo! H@rri$.**' as Str,
+Length('Hel#lo! H@rri$.**') as "Length",
+substr('Hel#lo! H@rri$.**',5,2) as "Middle 2 chars"
+from dual;
+
+(2) - Instr -- finds the POSITION from a value in a string
+
+** Find Position of any character in a string
+
+select 'Hel#lo! H@rri$.**' as Str,
+Length('Hel#lo! H@rri$.**') as "Length",
+instr('Hel#lo! H@rri$.**','@') as "Position of @"
+from dual;
+
+--substr syntax INSTR(string,character value)
+            -- e.g INSTR('Hel#lo! H@rri$.**',@). 
+            -- @ is the character value whose position we want to find.
+
+** Find 3rd instance of r in a string
+
+select 'Hel#lo! H@rri$.**' as Str,
+Length('Hel#lo! H@rri$.**') as "Length",
+instr('Hel#lo! H@rri$.**','r',3) as "Position of 3rd instance of R"
+from dual;
+
+
+--(3) -  Length: Length return the number of characters inside a string value.
+
+
+
+--(4) -  Replace: Replace any character in a string with another character
+select 'Hel#lo! H@rri$.**' as Str, 
+Length('Hel#lo! H@rri$.**') as "Length",
+replace('Hel#lo! H@rri$.**','#','') as "Replaced character"
+from dual;
+
+-- Replace syntax:REPLACE(string, old_value, new_value)
+
+--(5) - TRIM: Trim length of string/variable
+
+select 'Hel#lo! H@rri$.**' as Str, 
+Length('Hel#lo! H@rri$.**') as "Length",
+trim('*' from 'Hel#lo! H@rri$.**') as "trimmed"
+from dual;
+
+--Trim syntax: TRIM([LEADING | TRAILING | BOTH] trim_character FROM string)
+
+
+--6) - LTRIM/ RTRIM:
+
+SELECT 'Hel#lo! H@rri$.**' AS Str,
+       LENGTH('Hel#lo! H@rri$.**') AS "Le ngth",
+       LTRIM('Hel#lo! H@rri$.**', 'H') AS "LTRIMmed",
+       RTRIM('Hel#lo! H@rri$.**', '*') AS "RTRIMmed"
+FROM dual;
+
+---LTrim/RTrim:Removes any characters in set_of_characters from the LEFT/start or RIGHT/end of the string
+
+(7) - LPAD/RPAD
+SELECT 'Hel#lo! H@rri$.**' AS Str,
+       LENGTH('Hel#lo! H@rri$.**') AS "Length",
+       LPAD('Hel#lo! H@rri$.**', 30, '*') AS "LPADded",
+       RPAD('Hel#lo! H@rri$.**', 30, '*') AS "RPADded"
+FROM dual;
+
+-- LPad/Rpad the string on the LEFT/Right with pad_string until it reaches total_length
+
+
+
+(8) - REGEX : Replace any unwanted characters from a string
+
+SELECT 'Hel#lo! H@rri$.**' AS Str,
+       LENGTH('Hel#lo! H@rri$.**') AS "Le ngth",
+       REGEXP_REPLACE('Hel#lo! H@rri$.**', '[^A-Za-z0-9 ]', '') AS "Cleaned"
+FROM dual;
+
+--Regex removes all unwanted characters from a string . [^A-Za-z0-9 ] removes all numbers, letters and spaces from my string.
+
+
+- Practice Questions:
+
+** Find month from date
+
+Select sysdate AS Today,
+extract (month from sysdate) as "Month Date"
+FROM dual;
+
+SELECT DATE '2026-01-18' AS ,
+extract (month from DATE '2026-01-18' ) as "Month Date"
+FROM dual;
+
+
+
+** Find year from date
+
+Select sysdate as Today,
+extract (year from sysdate) as "Year Date"
+from dual;
+
+** Find day from date
+
+Select sysdate as Today,
+extract (day from sysdate) as "Day Date"
+from dual;
+
+** Find Day ID from date
+
+** Add_Months
