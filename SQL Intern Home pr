@@ -1,0 +1,38 @@
+CREATE TABLE intern.CALL_center(
+ID               Varchar2(20),
+CUSTOMER_NAME    Varchar2(50),
+SENTIMENT        Varchar2(20),
+CSAT_SCORE       Int,
+CALL_TIMESTAMP   Date,
+REASON           Varchar2(20),
+CITY             Varchar2(20),
+STATE            Varchar2(20),
+CHANNEL          Varchar2(20),
+RESPONE_TIME     Varchar2(50),
+CALL_DURATION    Int,
+CALL_CENTER      Varchar2(50)
+);
+
+select id,csat_score from intern.call_center
+where csat_score < 5
+order by csat_score;
+
+select * from intern.call_center;
+
+select customer_name from intern.call_center
+where sentiment = 'Very Negative';
+
+select call_center, count(customer_name) as no_of_callers_per_center from intern.call_center
+group by call_center;
+
+select avg(csat_score),channel from intern.call_center
+group by channel;
+
+select * from intern.call_center;
+where respone_time = 'Below Sla' OR respone_time = 'Above SLA';
+
+select max(call_duration),call_center from intern.call_center
+group by call_Center;
+
+select count(id)as no_of_calls, sentiment  from intern.call_center
+group by sentiment;
