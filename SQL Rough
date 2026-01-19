@@ -1,0 +1,48 @@
+SQL Single Row Functions Practise Questions
+[1/19/2026]
+You are given the following string:
+
+'  Hel#lo! H@rri$.**'
+
+-Find the length of the string.
+select '  Hel#lo! H@rri$.**' as Str,
+length('  Hel#lo! H@rri$.**') as "Length of string"
+from dual;
+
+-Remove the leading and trailing spaces.
+select '  Hel#lo! H@rri$.**' as Str,
+LTRIM( '  Hel#lo! H@rri$.**', 'H') as LTRIMMED,
+RTRIM('  Hel#lo! H@rri$.**','*') as RTRIMMED
+from dual;
+
+Remove the * and . characters from the ends of the string.
+select '  Hel#lo! H@rri$.**' as Str,
+REGEXP_REPLACE('  Hel#lo! H@rri$.**', '[.*]', '') as replaced
+from dual;
+
+
+Find the position of @ in the string.
+select '  Hel#lo! H@rri$.**' as Str,
+instr('  Hel#lo! H@rri$.**','@') as "Position of @"
+from dual;
+
+Extract the substring from position 5 to 10.
+
+
+
+Pad the string to length 30 with # on the left.
+select '  Hel#lo! H@rri$.**' as Str,
+LPAD('  Hel#lo! H@rri$.**',30,'%')
+FROM DUAL;
+
+
+Pad the string to length 30 with * on the right.
+
+select '  Hel#lo! H@rri$.**' as Str,
+RPAD('  Hel#lo! H@rri$.**',30,'%')
+FROM DUAL;
+
+Remove all special characters (anything that is not a letter or number) using regex
+select '  Hel#lo! H@rri$.**' as Str,
+REGEXP_REPLACE('  Hel#lo! H@rri$.**', '[.*$#!@]', '') as replaced
+from dual
