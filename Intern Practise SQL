@@ -1,0 +1,311 @@
+  
+> Feasibility Study
+  ******************
+
+1.  Table Name : Branch
+
+- Branch Code  Varchar(3) PK
+- Branch Name  Varchar2(100)
+- City         Varchar(100)     
+- Type         Char(1)
+
+- Difference between Varchar And Char   
+
+2.  CUSTOMER INFORMATION
+
+- CUSTOMER_No        Int PK
+- Customer Name      Varchar2(100)
+- Branch code        Varchar2(3) FK
+- Customer Type      Varchar2(10)
+- Unique ID Name     Varchar2(20)
+- Unique_id_value    Varchar2(30)
+- Current Address    Varchar2(100)
+- CIF Creation date  Date
+- Maker ID           Varchar2(100)
+- Checker ID         Varchar2(100)
+
+
+3.  PERSONAL INFORMATION
+
+- CUSTOMER_No FK
+- Date of birth         Date
+- First Name           Varchar2(50)
+- Middle Name          Varchar2(50)
+- Last Name            Varchar2(50)
+- Gender               Varchar2(10)
+- Mobile               INT PK
+- Email                Varchar2(50)
+- Current home address Varchar2(100)
+- Previous home address Varchar2(100)
+- Office address       Varchar2(100)
+
+
+4.  DOMESTIC (Family Details)
+
+- CUSTOMER_No  FK
+- Marital status    Boolean
+- Spouse name       Varchar(50)
+- Mother Name       Varchar(50)
+- Father Name       Varchar(50)
+
+
+5.  Account Detials
+
+- CUSTOMER NO FK            INT
+- ACCOUNT NO  PK            Varchar(20)
+- Branch code FK            Varchar(10)
+- ACCOUNT CLASS             Varchar(10)
+- CURRENCY                  char(3)
+- ACCOUNT OPENING           DATE DATE
+- ACCOUNT CURRENT BALANCE   DECIMAL
+- LAST TRANSACTION CREDIT   DATE DATE
+- LAST TRANSACTION DEBIT    DATE DATE
+- Account Status (OPen/CLose) Boolean
+- Dormant                     BOOLEAN
+- No Debit Flag               BOOLEAN
+- No Credit Flag              BOOLEAN
+- Maker ID                    INT
+- Checker ID                  INT
+
+
+6. Debit Cards
+
+- Account No FK         INT
+- Debit Card No PK      Varchar(20)
+- Debit Card Status     Varchar(10)
+- Debit Card Creation   Date DATE
+- Debit Card Activation Date DATE
+- Maker ID              INT
+- Checker ID            INT
+
+7. Debit Card Logs
+
+- ActivityLogID     Varchar2(20) 
+- Debit Card No FK  Varchar2(20)
+- From Status       Varchar(10)
+- New Status        Varchar(10)
+- Activity Date     Date
+- User Id           Int
+
+
+> Design Phase (Database Design/Physical Design/Database Structure)
+  *****************************************************************
+
+1. Branch Table Design
+
+--Select * From INTERN.branch
+
+--Drop Table INTERN.branch
+
+CREATE TABLE INTERN.branch (
+    branch_code VARCHAR2(3),
+    branch_name VARCHAR2(100),
+    city        VARCHAR2(100),
+    type        CHAR(100),
+    Constraint branch_IDX PRIMARY KEY(BRANCH_CODE)
+)
+
+INSERT INTO branch Values('01','E-11 Markaz','Islamabad','Head office');
+
+--Select * from branch;
+
+
+2. Customer Information Table Design:
+
+
+CREATE TABLE INTERN.customerinfo
+(
+   CUSTOMER_No         INT ,
+   Customer_Name       VARCHAR2 (100),
+   Branch_code         VARCHAR2 (3),
+   Customer_Type       VARCHAR2 (10),
+   Unique_ID_Name      VARCHAR2 (20),
+   Unique_id_value     VARCHAR2 (30),
+   Current_Address     VARCHAR2 (100),
+   CIF_Creation_date   DATE,
+   Maker_ID            VARCHAR2 (20),
+   Checker_ID          VARCHAR2 (20),
+   Constraint customer_IDX PRIMARY KEY(CUSTOMER_NO)
+);
+--Drop Table INTERN.customerinfo;
+3.  Personal Information Table Design
+
+CREATE TABLE INTERN.personalinfo
+(
+   CUSTOMER_No             VARCHAR2 (50),
+   DOB                     DATE,
+   First_Name              VARCHAR2 (50),
+   Middle_Name             VARCHAR2 (50),
+   Last_Name               VARCHAR2 (50),
+   Gender                  VARCHAR2 (10),
+   Mobile                  INT ,
+   Email                   VARCHAR2 (50),
+   Current_home_address    VARCHAR2 (100),
+   Previous_home_address   VARCHAR2 (100),
+   Office_address          VARCHAR2 (100),
+   Constraint personal_IDX PRIMARY KEY(Mobile)
+);
+;
+4. Domestic Table Design
+
+/* Formatted on 1/14/2026 8:37:25 PM (QP5 v5.252.13127.32867) */
+CREATE TABLE INTERN.Domestic
+(
+   CUSTOMER_No      VARCHAR2 (20),
+   Marital_status   CHAR (1),
+   Spouse_name      VARCHAR2 (50),
+   Mother_Name      VARCHAR2 (50),
+   Father_Name      VARCHAR (50)
+);
+
+5. Account Details Table Design
+
+/* Formatted on 1/14/2026 8:45:26 PM (QP5 v5.252.13127.32867) */
+CREATE TABLE INTERN.Acc_Det
+(
+   CUSTOMER_NO                    INT,
+   ACCOUNT_NO                     VARCHAR (20) ,
+   Branch_code                    VARCHAR (10),
+   ACCOUNT_CLASS                  VARCHAR (10),
+   CURRENCY                       CHAR (3),
+   ACCOUNT_OPENING_DATE           DATE,
+   ACCOUNT_CURRENT_BALANCE        DECIMAL,
+   LAST_TRANSACTION_CREDIT_DATE   DATE,
+   LAST_TRANSACTION_DEBIT_DATE    DATE,
+   Account_Status                 CHAR (1),
+   Dormant                        CHAR (1),
+   No_Debit_Flag                  CHAR (1),
+   No_Credit_Flag                 CHAR (1),
+   Maker_ID                       INT,
+   Checker_ID                     INT,
+   Constraint account_IDX PRIMARY KEY(account_no)
+);
+
+
+6. Debit Card Table Design
+
+CREATE TABLE INTERN.Debit_card
+(
+   Account_No              VARCHAR(20),
+   Debit_Card_No           VARCHAR2(20),
+   Debit_Card_Status       VARCHAR2(10),
+   Debit_Card_Creation     DATE,
+   Debit_Card_Activation   DATE,
+   Maker_ID                VARCHAR2(20),
+   Checker_ID              VARCHAR2(20),
+   Constraint debit_IDX PRIMARY KEY (Debit_Card_No)
+);
+drop table intern.debit_card;
+
+7. Debit Card Information Table Design
+
+/* Formatted on 1/14/2026 9:33:26 PM (QP5 v5.252.13127.32867) */
+CREATE TABLE INTERN.debit_info
+(
+   ActivityLogID   VARCHAR2 (20),
+   Debit_Card_No   VARCHAR2 (20),
+   From_Status     VARCHAR (10),
+   New_Status      VARCHAR (10),
+   Activity_Date   DATE,
+   User_Id         INT
+);
+
+
+*********************************************************************************
+
+
+-- Verify Data 
+
+Select * From INTERN.branch ;
+
+Select * From INTERN.customerinfo ;
+
+Select * From INTERN.personalinfo ;
+
+Select * From INTERN.domestic ;
+
+Select * From INTERN.acc_det ;
+
+Select * From INTERN.debit_card ;
+
+Select * From INTERN.debit_info ;
+
+******************************************************************************************
+
+---Single Row Function in Oracle SQL
+
+
+select branch_code from intern.branch;
+
+select customer_name from intern.customerinfo;
+
+select account_no from intern.acc_det;
+
+select father_name from intern.domestic;
+
+select marital_status from intern.domestic;
+
+select mother_name from intern.domestic;
+************************************
+
+Single Row Functions
+--------------------
+
+** Alias
+
+Select  
+'Hello! H@rri$.**' Str,
+Length('Hello! H@rri$.**') "Len gth"
+From    Dual;
+
+
+
+** Substr
+
+
+Select  
+'Hel#lo! H@rri$.**' Str,
+Length('Hel#lo! H@rri$.**') "Len gth"
+From    Dual;
+
+
+** Instr
+
+** First 2 characters from string
+
+select 'Hel#lo! H@rri$.**' Str,
+Length('Hel#lo! H@rri$.**') "Len gth",
+substr('Hel#lo! H@rri$.**',1,2) as "First 2 chars"
+From    Dual;
+
+
+** Last 2 Charaters from String
+select 'Hel#lo! H@rri$.**' as Str,
+Length('Hel#lo! H@rri$.**') as "Length",
+substr('Hel#lo! H@rri$.**',-2) as "Final 2 chars"
+from dual;
+
+** Characters from MId in a string
+
+
+** Find Position of any character in a string
+
+** Find 3rd instance of r in a string
+
+
+** Length
+** Replace
+** TRIM
+** LTRIM
+** RTRIM
+** LPAD
+** RPAD
+** REGEX (Replace any unwanted characters from a string)
+
+
+** Find month from date
+** Find year from date
+** Find day from date
+** Find Day ID from date
+
+** Add_Months
