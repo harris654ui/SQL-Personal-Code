@@ -44,5 +44,60 @@ FROM DUAL;
 
 Remove all special characters (anything that is not a letter or number) using regex
 select '  Hel#lo! H@rri$.**' as Str,
+
+
+
+select first_name,last_name,salary, 
+case
+when salary > 10000 then 'High'
+when salary >=5000 and salary <=10000 then 'Medium'
+else 'Low'
+END as "SAl"
+from hr.employees;
+
+select department_id,department_name,
+case
+when location_id = 1400 then 'US Based Location'
+else 'Other Regions'
+end case
+from hr.departments
+where location_id = 1400;
+
+
+Select Employee_id,First_Name From hr.Employees
+union
+Select Employee_id,First_Name From hr.Employees
+
+Select Employee_id,First_Name From hr.Employees
+union All
+Select Employee_id,First_Name From hr.Employees
+
+select first_name,employee_id,salary from hr.employees
+where salary = (select max(salary) from hr.employees);
+
+select * from hr.employees
+
+select first_name,employee_id,salary from hr.employees
+where salary < (select avg(salary) from hr.employees);
+
+select salary, first_name, last_name from hr.employees
+where salary = (select max(salary) from hr.employees);
+
+select first_name from hr.employees
+where salary > (select sum(salary) from hr.employees
+where department_id = 80);
+
+
+select salary, first_name, last_name from hr.employees
+where salary = (select min(salary) from hr.employees) and
+dep;
+
+
+select first_name,department_id,salary from hr.EMPLOYEES
+where department_id = 60;
+
+select first_name,salary from hr.employees 
+where 
+
 REGEXP_REPLACE('  Hel#lo! H@rri$.**', '[.*$#!@]', '') as replaced
 from dual
