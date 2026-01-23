@@ -248,9 +248,13 @@ select marital_status from intern.domestic;
 select mother_name from intern.domestic;
 ************************************
 
+-*1/19/2026
+
 Single Row Functions
 --------------------
+--INSTR ? finds the POSITION
 
+--SUBSTR ? extracts the VALUE
 ** Alias
 
 Select  
@@ -259,53 +263,398 @@ Length('Hello! H@rri$.**') "Len gth"
 From    Dual;
 
 
+(1) - Substr --finds the value from a given position in a string.
 
-** Substr
 
+--** First 2 characters from string
 
-Select  
-'Hel#lo! H@rri$.**' Str,
-Length('Hel#lo! H@rri$.**') "Len gth"
+select 'Hel#lo! H@rri$.**' as Str,
+Length('Hel#lo! H@rri$.**') as  "Len gth",
+substr('Hel#lo! H@rri$.**',7,2) as "First 2 chars"
 From    Dual;
 
-
-** Instr
-
-** First 2 characters from string
-
-select 'Hel#lo! H@rri$.**' Str,
-Length('Hel#lo! H@rri$.**') "Len gth",
-substr('Hel#lo! H@rri$.**',1,2) as "First 2 chars"
-From    Dual;
-
+--substr syntax SUBSTR(string, start_position, length)
+            -- e.g SUBSTR('Hel#lo! H@rri$.**',7,2). 
+            -- 7 is the starting position, 2 is the no of characters to return.
 
 ** Last 2 Charaters from String
+
 select 'Hel#lo! H@rri$.**' as Str,
 Length('Hel#lo! H@rri$.**') as "Length",
 substr('Hel#lo! H@rri$.**',-2) as "Final 2 chars"
 from dual;
 
-** Characters from MId in a string
 
+** Characters from MId in a string
+select 'Hel#lo! H@rri$.**' as Str,
+Length('Hel#lo! H@rri$.**') as "Length",
+substr('Hel#lo! H@rri$.**',5,2) as "Middle 2 chars"
+from dual;
+
+(2) - Instr -- finds the POSITION from a value in a string
 
 ** Find Position of any character in a string
 
+select 'Hel#lo! H@rri$.**' as Str,
+Length('Hel#lo! H@rri$.**') as "Length",
+instr('Hel#lo! H@rri$.**','@') as "Position of @"
+from dual;
+
+--substr syntax INSTR(string,character value)
+            -- e.g INSTR('Hel#lo! H@rri$.**',@). 
+            -- @ is the character value whose position we want to find.
+
 ** Find 3rd instance of r in a string
 
+select 'Hel#lo! H@rri$.**' as Str,
+Length('Hel#lo! H@rri$.**') as "Length",
+instr('Hel#lo! H@rri$.**','r',3) as "Position of 3rd instance of R"
+from dual;
 
-** Length
-** Replace
-** TRIM
-** LTRIM
-** RTRIM
-** LPAD
-** RPAD
-** REGEX (Replace any unwanted characters from a string)
 
+--(3) -  Length: Length return the number of characters inside a string value.
+
+
+
+--(4) -  Replace: Replace any character in a string with another character
+select 'Hel#lo! H@rri$.**' as Str, 
+Length('Hel#lo! H@rri$.**') as "Length",
+replace('Hel#lo! H@rri$.**','#','') as "Replaced character"
+from dual;
+
+-- Replace syntax:REPLACE(string, old_value, new_value)
+
+--(5) - TRIM: Trim length of string/variable
+
+select 'Hel#lo! H@rri$.**' as Str, 
+Length('Hel#lo! H@rri$.**') as "Length",
+trim('*' from 'Hel#lo! H@rri$.**') as "trimmed"
+from dual;
+
+--Trim syntax: TRIM([LEADING | TRAILING | BOTH] trim_character FROM string)
+
+
+--6) - LTRIM/ RTRIM:
+
+SELECT 'Hel#lo! H@rri$.**' AS Str,
+       LENGTH('Hel#lo! H@rri$.**') AS "Le ngth",
+       LTRIM('Hel#lo! H@rri$.**', 'H') AS "LTRIMmed",
+       RTRIM('Hel#lo! H@rri$.**', '*') AS "RTRIMmed"
+FROM dual;
+
+---LTrim/RTrim:Removes any characters in set_of_characters from the LEFT/start or RIGHT/end of the string
+
+(7) - LPAD/RPAD
+
+SELECT 'Hel#lo! H@rri$.**' AS Str,
+       LENGTH('Hel#lo! H@rri$.**') AS "Length",
+       LPAD('Hel#lo! H@rri$.**', 30, '*') AS "LPADded",
+       RPAD('Hel#lo! H@rri$.**', 30, '*') AS "RPADded"
+FROM dual;
+
+-- LPad/Rpad the string on the LEFT/Right with pad_string until it reaches total_length
+
+
+
+(8) - REGEX : Replace any unwanted characters from a string
+
+SELECT 'Hel#lo! H@rri$.**' AS Str,
+       LENGTH('Hel#lo! H@rri$.**') AS "Le ngth",
+       REGEXP_REPLACE('Hel#lo! H@rri$.**', '[^A-Za-z0-9 ]', '') AS "Cleaned"
+FROM dual;
+
+--Regex removes all unwanted characters from a string . [^A-Za-z0-9 ] removes all numbers, letters and spaces from my string.
+
+
+- Practice Questions:
 
 ** Find month from date
+
+Select sysdate AS Today,
+extract (month from sysdate) as "Month Date"
+FROM dual;
+
+SELECT DATE '2026-01-18' AS ,
+extract (month from DATE '2026-01-18' ) as "Month Date"
+FROM dual;
+
+
+
 ** Find year from date
+
+Select sysdate as Today,
+extract (year from sysdate) as "Year Date"
+from dual;
+
 ** Find day from date
-** Find Day ID from date
+
+Select sysdate as Today,
+extract (day from sysdate) as "Day Date"
+from dual;
 
 ** Add_Months
+
+Select sysdate as Today,
+extract (month from sysdate) as "Day Date"
+from dual;
+
+** Day In String
+
+SELECT SYSDATE AS Today,
+       TO_CHAR(SYSDATE, 'DAY') AS "Day Name"
+FROM dual;
+
+
+(1) - IN: Allows you to specify multiple values in a where clause.
+
+select * from intern.customerinfo
+where customer_type in ('Individual');--find rows where customer type is individual
+
+
+
+** NOT IN 
+
+
+(2) -  LIKE: is used in a SQL where clause to search for a specified pattern in a column.
+
+select * from intern.customerinfo
+where customer_name LIKE '%a'; -- FIND CUSTOMERS that name starts with 'a' 
+
+** NOT LIKE
+
+select * from intern.customerinfo
+where customer_name not LIKE 'a%';
+
+(3) - BETWEEN: selects values in a given range 
+
+select * from intern.customerinfo
+where branch_code between 1 and 2;
+
+** NOT BETWEEN
+
+select * from intern.customerinfo
+where branch_code not between 1 and 2;
+
+(4) - Exists: is used to test for the existence of any record in a subquery.
+
+SELECT column_name(s)
+FROM table_name
+WHERE EXISTS
+(SELECT column_name FROM table_name WHERE condition)
+
+**************************
+
+- SQL Aggregate Functions: are often used with the GROUP BY clause of the SELECT statement.
+
+MIN() - returns the smallest value within the selected column
+MAX() - returns the largest value within the selected column
+COUNT() - returns the number of rows in a set
+SUM() - returns the total sum of a numerical column
+AVG() - returns the average value of a numerical column
+
+
+select min(branch_code) from intern.acc_det;
+
+
+- SQL Group by function: often used with aggregate functions to group columns.
+
+select * from intern.acc_Det;
+
+select count(account_class) "no_of_accounts",account_class from intern.acc_Det
+group by account_class;
+
+
+select* from intern.customerinfo
+where customer_type = 'Individual';
+
+
+********************************
+Select
+
+Branch_Code,  
+
+CUST_AC_NO,
+
+CCY,
+
+AC_DESC,
+
+UPPER(AC_DESC) "Upper",
+
+LOWER(AC_DESC) "Lower",
+
+INITCAP(AC_DESC) "InitCap",
+
+CASE
+
+WHEN CCY='PKR' THEN 'Pakistan'
+
+WHEN CCY='USD' THEN 'America'
+
+Else 'Others'
+
+END "Case",
+
+DECODE(CCY,'PKR','Pakistan','Non-Pakistani') "Decode",
+
+AC_STAT_BLOCK ,
+
+NVL(AC_STAT_BLOCK,'@') "NVL",
+
+NVL2(AC_STAT_BLOCK,'@','$') "NVL2"
+
+From     Flexcube.sttm_cust_Account
+
+Where   LENGTH(AC_DESC)<=20
+
+And      CCY IN ('PKR','USD')
+
+And      Branch_Code NOT Between '001' AND '101'
+
+And      UPPER(AC_DESC) LIKE '%ALI%'
+
+- UPPER: converts text to uppercase
+- LOWER: converts text to lower
+- INITCAP: capitalizes the first letter of each word
+- CASE: conditional logic
+- DECODE: orace specific conditional function, similar to case
+- NVL: replaces NULL with any specified value
+- NVL2
+- LENGTH: return the length of a string
+- MINUS: Returns rows from the first query that do NOT exist in the second query.
+
+- UNION: Combines the result sets of two or more SELECT statements and removes duplicate rows
+- UNION ALL doesnt remove duplicate rows
+
+ 
+
+select first_name,last_name,salary, 
+case
+when salary > 10000 then 'High'
+when salary >=5000 and salary <=10000 then 'Medium'
+else 'Low'
+END as "SAl"
+from hr.employees;
+
+select department_id,department_name,
+case
+when location_id = 1400 then 'US Based Location'
+else 'Other Regions'
+end case
+from hr.departments
+where location_id = 1400;
+
+
+Select Employee_id,First_Name From hr.Employees
+union
+Select Employee_id,First_Name From hr.Employees
+
+Select Employee_id,First_Name From hr.Employees
+union All
+Select Employee_id,First_Name From hr.Employees
+
+
+Select JOB_ID 
+From   hr.Employees
+Where  Department_ID=110
+MINUS
+Select JOB_ID
+From   hr.Employees
+Where   Department_ID=90 
+
+
+Create OR Replace View EMP_HARRIS AS
+Select EMPLOYEE_ID,First_Name,Last_Name,Email,JOB_ID 
+From   Hr.EMPLOYEES
+
+
+Select *
+From   EMP_HARRIS
+
+
+Create OR Replace View EMP_HARRIS_SAL AS
+Select Department_ID ,SUM(SALARY) SAL
+From   Hr.EMPLOYEES
+Group by  Department_ID
+
+
+Select * 
+From   EMP_HARRIS_SAL
+
+Simple View
+Complex View
+Materialized View [Self]
+
+
+
+-- Subqueries
+-Select
+-From
+-Where
+-Having
+
+
+
+Select *
+From   HR.EMPLOYEES
+Where Department_ID = (
+                        Select Department_id 
+                        From   HR.DEPARTMENTS
+                        Where  Department_name='Human Resources'
+                      )
+                      
+
+Select *
+From   HR.EMPLOYEES
+Where Department_ID =
+                    (
+                    Select Department_Id
+                    From   HR.DEPARTMENTS
+                    Where  Department_name IN ('Human Resources','Marketing')
+                    )
+                    
+
+ 
+
+Select *
+From   HR.EMPLOYEES
+Where Department_ID IN
+                    (
+                    Select Department_Id
+                    From   HR.DEPARTMENTS
+                    Where  Department_name IN ('Human Resources','Marketing')
+                    )
+                    
+                    
+-- Correlated Subquery
+Select 
+Emp.*,
+(Select Department_Name  From   HR.DEPARTMENTS Dep Where  Dep.Department_ID=Emp.Department_ID) DName,
+SALARY
+From   HR.EMPLOYEES Emp 
+
+
+Select Department_ID, SUM(SALARY)
+From   HR.EMPLOYEES Emp 
+Group by Department_ID
+Having SUM(SALARY)<=50000
+
+
+Select Department_Name
+From   HR.DEPARTMENTS
+Where  Department_ID=90
+                                 
+
+
+*********************
+-  Joins: 
+
+Select 
+Emp.*,
+SALARY,
+Department_Name
+From   HR.EMPLOYEES Emp JOIN (Select Department_ID,Department_Name  
+                              From   HR.DEPARTMENTS  
+                             ) Dep ON (Dep.Department_ID=Emp.Department_ID)
+
+                                                                       
