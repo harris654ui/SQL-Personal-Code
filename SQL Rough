@@ -20,7 +20,376 @@ select '  Hel#lo! H@rri$.**' as Str,
 REGEXP_REPLACE('  Hel#lo! H@rri$.**', '[.*]', '') as replaced
 from dual;
 
+Declare
 
+Number Int;
+
+Begin
+
+Number:= 8
+
+
+DBMS_OUTPUT.PUT_LINE(Number);
+
+End
+
+
+Q2.
+
+Declare
+
+emp_name VARCHAR2(50);
+
+emp_salary NUMBER;
+join_date DATE;
+
+
+
+Begin
+
+emp_name:= "Harris"; 
+emp_salary:= 50000
+join_date:= 12/12/2024
+
+DBMS_OUTPUT.PUT_LINE(emp_salary);
+DBMS_OUTPUT.PUT_LINE(emp_name);
+DBMS_OUTPUT.PUT_LINE(join_date);
+End;
+
+
+
+Declare
+
+Current_Date DATE;
+
+Begin
+
+Current_Date:= SYSDATE;
+
+
+DBMS_OUTPUT.PUT_LINE(Current_Date);
+
+End;
+
+
+
+Declare
+DepartmentID  VarChar2(50);
+Begin
+select department_id into DepartmentID
+from hr.departments
+where department_id = 20;
+DBMS_OUTPUT.PUT_LINE(DepartmentID);
+End;
+
+
+Declare
+DepartmentID  VarChar2(50);
+DepartmentName VarChar2(50);
+Begin
+
+select department_id, department_name
+into DepartmentID, DepartmentName
+from hr.departments
+where department_id = 20;
+
+
+DBMS_OUTPUT.PUT_LINE(DepartmentID);
+
+DBMS_OUTPUT.PUT_LINE(DepartmentName);
+End;
+
+
+Declare
+EmployeeID  Varchar2(50);
+DeparmentID  Varchar2(50);
+
+Begin
+
+EmployeeID:= 100;
+
+SELECT department_id into DeparmentID
+from hr.employees
+where employee_ID= EmployeeID;
+
+DBMS_OUTPUT.PUT_LINE(EmployeeID);
+DBMS_OUTPUT.PUT_LINE(DeparmentID);
+End;
+
+
+Declare
+DepartmentID VarChar2(100);
+DepartmentName VarChar2(100);
+
+
+Begin
+
+SELECT d.deparment_id,d.department_name into DepartmentID,DepartmentName 
+From hr.departments d
+Join hr.employees e 
+on d.deparment_id = e.deparment_id
+where e.employee_id = 101;
+
+
+DBMS_OUTPUT.PUT_LINE(DepartmentName );
+DBMS_OUTPUT.PUT_LINE(DeparmentID);
+
+
+End;
+
+
+Declare
+DepartmentID VarChar2(100);
+DepartmentName VarChar2(100);
+
+
+Begin
+
+SELECT d.deparment_id,d.department_name into DepartmentID,DepartmentName 
+From hr.departments d
+Join hr.employees e 
+on d.deparment_id = e.deparment_id
+where e.employee_id = 101;
+
+
+DBMS_OUTPUT.PUT_LINE(DepartmentName );
+DBMS_OUTPUT.PUT_LINE(DeparmentID);
+
+
+End;
+
+
+Declare
+
+first_name String;
+salary Number;
+employeeid hr.employees.employee_id%TYPE;
+
+Begin
+
+
+employeeid := 102
+select first_name,salary,employee_id 
+into first_name,salary,
+from hr.employees
+where employee_id = employeeid;
+
+DBMS_OUTPUT.PUT_LINE(first_name  );
+DBMS_OUTPUT.PUT_LINE(salary );
+
+End;
+
+
+Declare
+
+first_name VarChar2(50);
+salary Number;
+employeeid hr.employees.employee_id%TYPE;
+
+Begin
+
+
+employeeid := 102;
+select first_name,salary 
+into first_name,salary
+from hr.employees
+where employee_id = employeeid;
+
+DBMS_OUTPUT.PUT_LINE(first_name  );
+DBMS_OUTPUT.PUT_LINE(salary );
+
+End;
+
+
+Declare
+
+salary int;
+firstname Varchar2(100);
+
+Begin
+
+select salary,first_name 
+into salary,firstname
+from hr.employees;
+
+DBMS_OUTPUT.PUT_LINE(firstname);
+DBMS_OUTPUT.PUT_LINE(salary );
+End;
+
+
+Declare
+
+salary int;
+firstname Varchar2(100);
+departmentname Varchar2(100);
+
+Begin
+
+select e.salary,e.first_name ,d.department_name
+into salary,firstname,departmentname
+from hr.employees e
+join hr.departments d
+on e.department_id = d.department_id
+where e.employee_id = 103;
+
+
+
+DBMS_OUTPUT.PUT_LINE(firstname);
+DBMS_OUTPUT.PUT_LINE(salary );
+DBMS_OUTPUT.PUT_LINE(departmentname);
+End;
+
+
+Declare
+firstname hr.employees.first_name%TYPE;
+departmentid hr.departments.department_id%TYPE;
+locationcity hr.locations.city%TYPE;
+employeeid hr.employees.employee_id%TYPE;
+
+
+Begin
+
+employeeid := 103;
+
+select e.first_Name,d.department_id,l.city
+into firstname,departmentid,locationcity
+from hr.employees e
+join hr.departments d
+on e.department_id = d.department_id
+join hr.locations l
+on d.location_id = l.location_id
+where e.employee_id = employeeid;
+
+DBMS_OUTPUT.PUT_LINE('Employee Name: ' || firstname);
+DBMS_OUTPUT.PUT_LINE('Department ID: ' || departmentid);
+DBMS_OUTPUT.PUT_LINE('Location: ' || locationcity);
+
+End;
+
+declare
+
+num number:= 5;
+
+Begin
+    loop
+        dbms_output.put_line(num);
+        num:= num * 5;
+        
+        exit when num>50;
+    end loop;
+end;
+
+declare 
+
+
+begin
+    for e in(select first_name,salary from hr.employees)loop 
+        DBMS_OUTPUT.PUT_LINE(e.first_name || ' ' || e.salary);
+    
+    end loop;
+end;
+
+/
+
+begin
+    for emp in (select first_name,job_id from hr.employees) loop
+    DBMS_OUTPUT.PUT_LINE(emp.first_name || ' ' || emp.job_id);
+    end loop;
+
+end;
+
+begin
+    for e in(select first_name,salary from hr.employees)loop 
+        DBMS_OUTPUT.PUT_LINE(e.first_name || ' ' || e.salary);
+    where salary > 10000;
+    end loop;
+end;
+
+begin
+    for e in(select first_name,salary from hr.employees where salary > 10000)loop 
+        DBMS_OUTPUT.PUT_LINE(e.first_name || ' ' || e.salary);
+    end loop;
+end;
+
+begin
+    for e in(select first_name,last_name from hr.employees)loop 
+        DBMS_OUTPUT.PUT_LINE(e.first_name || ' ' || e.last_name);
+    end loop;
+end;
+
+
+
+begin
+    for e in(select first_name,department_id from hr.employees where department_id = 50)loop 
+        DBMS_OUTPUT.PUT_LINE(e.first_name || ' ' || e.department_id);
+    end loop;
+end;
+
+
+begin
+    for e in(select count(first_name) as no_of_employees from hr.employees)loop 
+        DBMS_OUTPUT.PUT_LINE('Number of employees: '|| e.no_of_employees);
+    end loop;
+end;
+
+begin 
+for e in (select first_name,salary from hr.employees where department_id = 60)loop
+DBMS_OUTPUT.PUT_LINE(e.first_name);
+     DBMS_OUTPUT.PUT_LINE('Original salary: '||e.salary);
+     DBMS_OUTPUT.PUT_LINE('Increased salary: '||e.salary * 1.10);
+end loop;
+
+end;
+
+BEGIN
+    FOR e IN (
+        SELECT employee_id, salary
+        FROM hr.employees
+        WHERE salary < 6000
+    ) LOOP
+    DBMS_OUTPUT.PUT_LINE(' name: '||e.employee_id);
+        UPDATE hr.employees
+        SET salary = e.salary * 1.05
+        WHERE employee_id = e.employee_id;
+        DBMS_OUTPUT.PUT_LINE(' salary: '||e.salary);
+    END LOOP;
+    
+    
+  select * from hr .employees
+  where employee_id = 200;
+
+    -- COMMIT;   
+END;
+/
+
+ROLLBACK;  
+
+
+
+begin
+    for e in(select emp.first_name,d.department_name from hr.employees emp
+             join hr.departments d
+             on emp.department_id = d.department_id)loop 
+        DBMS_OUTPUT.PUT_LINE(e.first_name ||' works in '||e.department_name);
+    end loop;
+end;
+
+
+
+begin
+    for e in(select count(employee_id) count from hr.employees
+              group by department_id)loop 
+        DBMS_OUTPUT.PUT_LINE(e.count || " "|| e.department_id);
+    end loop;
+end;
+
+
+begin
+    for e in(select count(employee_id) as countn, department_id from hr.employees
+              group by department_id)loop 
+        DBMS_OUTPUT.PUT_LINE(e.countn ||' '|| e.department_id);
+    end loop;
+end;
 Find the position of @ in the string.
 select '  Hel#lo! H@rri$.**' as Str,
 instr('  Hel#lo! H@rri$.**','@') as "Position of @"
