@@ -1,0 +1,293 @@
+/*<TOAD_FILE_CHUNK>*/
+
+-- Basic Block Structure
+
+Declare
+
+-- Declare variables here
+
+Begin
+
+-- Write your logic here
+
+End;
+
+
+-- How to declare a variable
+
+
+Declare
+
+-- Declare variables here
+VarA Number;
+VarB Varchar2(100);
+VarC Date;
+
+Begin
+
+-- How to assign value to a variabe
+
+VarA := 786;
+
+VarB := 'Hi! I am Harris';
+
+VarC := Sysdate;
+
+
+-- How to print value stored in Variable
+
+DBMS_OUTPUT.PUT_LINE('Value of Variable A is : '||VarA);
+
+DBMS_OUTPUT.PUT_LINE('Value of Variable B is : '||VarB);
+
+DBMS_OUTPUT.PUT_LINE('Value of Variable C is : '||VarC);
+
+End;
+
+
+-- HOw to store a value in a variable based on query and print its result
+
+
+Declare
+
+VarA  Varchar2(100);
+
+Begin
+
+--        Store column value in a variable
+Select Department_Name INTO VarA
+From   HR.DEPARTMENTS
+Where  Department_ID=10;
+
+DBMS_OUTPUT.PUT_LINE(VarA);
+
+End;
+
+
+-- HOw to get a value from table based on variable and store a value in a variable based on query and print its result
+
+Declare
+
+VarA  Varchar2(100);
+VarB  Number;
+
+Begin
+
+VarB :=90;
+
+-- HOw to store a value in a variable based on query
+Select Department_Name INTO VarA
+From   HR.DEPARTMENTS
+Where  Department_ID=VarB; -- using dynamic variable
+
+DBMS_OUTPUT.PUT_LINE(VarA);
+
+End;
+
+
+-- How to get the department Name based on variable value in which value has been stored from a query
+
+Declare
+
+VarA  Varchar2(100);
+VarB  Number;
+
+Begin
+
+
+-- Get the department COde of a employee 
+Select Department_ID INTO VarB
+From   Hr.employees
+Where  Employee_ID=103;
+
+
+-- HOw to store a value in a variable based on query
+Select Department_Name INTO VarA
+From   HR.DEPARTMENTS
+Where  Department_ID=VarB; -- using dynamic variable
+
+DBMS_OUTPUT.PUT_LINE(VarA);
+
+End;
+
+
+
+-- Multi variable INTO clause to store more than one value and print it
+Declare
+
+num  int;
+num2 hr.departments.Department_Name%TYPE;
+
+
+Begin
+
+num:= 1;
+num2 := 'Harris';
+
+
+Select Department_ID,department_name INTO NUM, NUM2 
+From   hr.departments
+Where  department_id = 90;
+
+
+
+DBMS_OUTPUT.PUT_LINE(num2);
+
+DBMS_OUTPUT.PUT_LINE(num);
+
+End;
+
+**************************************************
+-- If ..Then ..Else Scripting
+
+Declare
+v_input number;
+Begin 
+v_input:= 80000;
+if v_input > 80000 then
+DBMS_OUTPUT.PUT_LINE('High Salary');
+elsif v_input >= 50000 then
+DBMS_OUTPUT.PUT_LINE('Medium Salary');
+else
+DBMS_OUTPUT.PUT_LINE('Low Salary');
+end if;
+End;
+
+--Using if statement with variables
+DECLARE
+    v_salary NUMBER;
+    v_result VARCHAR2(20);
+BEGIN
+    v_salary := 75000;
+
+    IF v_salary > 80000 THEN
+        v_result := 'High Salary';
+    ELSIF v_salary >= 50000 THEN
+        v_result := 'Medium Salary';
+    ELSE
+        v_result := 'Low Salary';
+    END IF;
+
+    DBMS_OUTPUT.PUT_LINE(v_result);
+END;
+
+**************************************************************
+-- Basic Loop
+
+DECLARE
+    v_num NUMBER := 1;
+BEGIN
+    LOOP
+        DBMS_OUTPUT.PUT_LINE(v_num);
+        v_num := v_num + 1;
+
+        EXIT WHEN v_num > 5;
+    END LOOP;
+END;
+
+--FOR loop
+
+BEGIN
+    FOR i IN 1..5 LOOP
+        DBMS_OUTPUT.PUT_LINE(i);
+    END LOOP;
+END;
+/
+/*<TOAD_FILE_CHUNK>*/
+BEGIN
+    FOR emp IN (SELECT first_name, salary FROM hr.employees) LOOP
+        DBMS_OUTPUT.PUT_LINE(emp.first_name || ' earns ' || emp.salary);
+    END LOOP;
+END;
+/
+
+
+/*<TOAD_FILE_CHUNK>*/
+--Cursor For Loop
+
+begin
+    for e in(select first_name,salary from hr.employees)loop 
+        DBMS_OUTPUT.PUT_LINE(e.first_name || e.salary);
+    
+    end loop;
+end;
+
+
+
+
+
+
+
+-- Sajid
+Begin
+
+FOR E IN (
+          Select emp.department_id, emp.first_name,d.department_name 
+          From   hr.employees emp JOIN hr.departments d ON (emp.department_id = d.department_id)
+          Order by emp.department_id
+          )
+          
+ 
+LOOP 
+
+DBMS_OUTPUT.PUT_LINE(e.first_name ||' works in '||e.department_name|| ' Department ID : '|| e.department_id );
+DBMS_OUTPUT.PUT_LINE('******************************************************************************');
+DBMS_OUTPUT.PUT_LINE('Total No of Employees :');
+DBMS_OUTPUT.PUT_LINE('******************************************************************************');
+END LOOP;
+
+END;
+
+
+
+Begin
+
+FOR E IN (Select department_id,count(employee_id) CNT 
+          From hr.employees
+          Group by department_id)
+          
+LOOP 
+
+DBMS_OUTPUT.PUT_LINE(e.CNT ||' '|| e.department_id);
+
+END LOOP;
+
+END;
+
+
+
+Begin
+
+FOR E IN (Select department_id,department_name,count(employee_id) CNT 
+          From   hr.employees
+          Group  by department_id,department_name)
+
+LOOP
+
+DBMS_OUTPUT.PUT_LINE('******************************************************************************');
+
+DBMS_OUTPUT.PUT_LINE('Total employees in :'||e.department_name||' '||e.CNT);
+
+DBMS_OUTPUT.PUT_LINE('******************************************************************************');
+
+
+                    FOR F IN (
+                              Select emp.department_id, emp.first_name,d.department_name 
+                              From   hr.employees emp JOIN hr.departments d ON (emp.department_id = d.department_id)
+                              Where emp.department_id=e.department_id
+                              Order by emp.department_id
+                              )
+                               
+                    LOOP 
+
+                    DBMS_OUTPUT.PUT_LINE(F.first_name ||' works in '||F.department_name|| ' Department ID : '|| F.department_id );
+                              
+                    END LOOP;
+
+
+END LOOP;
+
+
+END;
+
+
